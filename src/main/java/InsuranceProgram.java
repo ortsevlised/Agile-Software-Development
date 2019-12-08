@@ -68,36 +68,31 @@ public class InsuranceProgram {
      * @param accidents
      */
    static int getAmountToPay(int basicInsurance, int accidents) {
-        int cost;
         switch (accidents) {
             case 0:
-                System.out.println(Constants.NO_SURCHARGE);
-                System.out.println(Constants.TOTAL_AMOUNT_TO_PAY + basicInsurance);
+                System.out.println(Constants.NO_SURCHARGE + "\n" + Constants.TOTAL_AMOUNT_TO_PAY + basicInsurance);
                 return basicInsurance;
             case 1:
-                cost = basicInsurance + 50;
-                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 50 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
-                return cost;
+                return calculateCost(basicInsurance, 50);
             case 2:
-                cost = basicInsurance + 125;
-                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 125 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
-                return cost;
+                return calculateCost(basicInsurance, 125);
             case 3:
-                cost = basicInsurance + 225;
-                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 225 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
-                return cost;
+                return calculateCost(basicInsurance, 225);
             case 4:
-                cost = basicInsurance + 375;
-                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 375 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
-                return cost;
+                return calculateCost(basicInsurance, 375);
             case 5:
-                cost = basicInsurance + 575;
-                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 575 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
-                return cost;
+                return calculateCost(basicInsurance, 575);
             default:
                 System.out.println(Constants.UNINSURABLE);
                 return -1;
         }
+    }
+
+    private static int calculateCost(int basicInsurance, int extraValue) {
+        int cost;
+        cost = basicInsurance + extraValue;
+        System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + extraValue + Constants.TOTAL_AMOUNT_TO_PAY + cost);
+        return cost;
     }
 }
 
