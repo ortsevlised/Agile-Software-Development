@@ -1,19 +1,20 @@
-import jline.internal.Log;
+import org.junit.jupiter.api.Test;
 
-import java.util.InputMismatchException;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Scanner;
 
-public class insuranceProgram {
+public class InsuranceProgram {
 
     private static final String ENTER_YOUR_AGE = "Enter your age: ";
     private static final String ADDITIONAL_SURCHARGE = "Additional surcharge ";
     private static final String NO_ADDITIONAL_SURCHARGE = "No additional surcharge";
-    private static final String PLEASE_ENTER_A_VALID_NUMBER = "Please enter a valid number";
+    private static final String PLEASE_ENTER_A_VALID_NUMBER = "That's not a valid number\nPlease enter a valid one";
     private static final String HOW_MANY_ACCIDENTS_DID_YOU_HAVE = "\nHow many accidents did you have?\n";
     private static final String NO_SURCHARGE = "No surcharge";
-    private static final String ADDITIONAL_SURCHARGE_FOR_ACCIDENT = "Additional surcharge for accident: ";
+    private static final String ADDITIONAL_SURCHARGE_FOR_ACCIDENT = "Additional surcharge for accident(s): ";
     private static final String TOTAL_AMOUNT_TO_PAY = " \nTotal amount to pay: ";
-    private static final String NO_INSURANCE = "No insurance";
+    private static final String UNINSURABLE = "Not eligible for insurance cover";
     private static final int minimumAge = 16;
     private static final String NOT_INSURABLE_AGE_MESSAGE = "You should be at least " + minimumAge + " years old to insure your vehicle\nBye...";
 
@@ -39,19 +40,19 @@ public class insuranceProgram {
      * @return
      */
     private static int getUserInput() {
-        Scanner input = new Scanner(System.in);
-        try {
-            return input.nextInt();
-        } catch (InputMismatchException e) {
-            Log.info(PLEASE_ENTER_A_VALID_NUMBER);
-            return getUserInput();
+        Scanner sc = new Scanner(System.in);
+        int number;
+        do {
+            while (!sc.hasNextInt()) {
+                System.out.println(PLEASE_ENTER_A_VALID_NUMBER);
+                sc.next();
+            }
+            number = sc.nextInt();
         }
+        while (number <= 0);
+        return number;
     }
 
-//    @Test
-//    public void userInputTest() {
-//        System.setIn(6);
-//    }
 
     /**
      * Process the data and returns the insurance's value
@@ -62,7 +63,7 @@ public class insuranceProgram {
     private static void processInsurance(String message, int basicInsurance) {
         printMessages(message);
         int accidents = getUserInput();
-        switchAccidents(basicInsurance, accidents);
+        getAmountToPay(basicInsurance, accidents);
     }
 
     /**
@@ -82,7 +83,7 @@ public class insuranceProgram {
      * @param basicInsurance
      * @param accidents
      */
-    private static int switchAccidents(int basicInsurance, int accidents) {
+   static int getAmountToPay(int basicInsurance, int accidents) {
         int cost;
         switch (accidents) {
             case 0:
@@ -110,7 +111,7 @@ public class insuranceProgram {
                 System.out.println(ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 575 + TOTAL_AMOUNT_TO_PAY + cost);
                 return cost;
             default:
-                System.out.println(NO_INSURANCE);
+                System.out.println(UNINSURABLE);
                 return -1;
         }
     }
