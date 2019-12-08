@@ -1,37 +1,21 @@
-import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class InsuranceProgram {
-
-    private static final String ENTER_YOUR_AGE = "Enter your age: ";
-    private static final String ADDITIONAL_SURCHARGE = "Additional surcharge ";
-    private static final String NO_ADDITIONAL_SURCHARGE = "No additional surcharge";
-    private static final String PLEASE_ENTER_A_VALID_NUMBER = "That's not a valid number\nPlease enter a valid one";
-    private static final String HOW_MANY_ACCIDENTS_DID_YOU_HAVE = "\nHow many accidents did you have?\n";
-    private static final String NO_SURCHARGE = "No surcharge";
-    private static final String ADDITIONAL_SURCHARGE_FOR_ACCIDENT = "Additional surcharge for accident(s): ";
-    private static final String TOTAL_AMOUNT_TO_PAY = " \nTotal amount to pay: ";
-    private static final String UNINSURABLE = "Not eligible for insurance cover";
-    private static final int minimumAge = 16;
-    private static final String NOT_INSURABLE_AGE_MESSAGE = "You should be at least " + minimumAge + " years old to insure your vehicle\nBye...";
 
 
     public static void main(String[] args) {
         int basicInsurance = 500;
         int surcharge = 100;
 
-        System.out.print(ENTER_YOUR_AGE);
+        System.out.print(Constants.ENTER_YOUR_AGE);
         int age = getUserInput();
 
-        if (age < minimumAge) {
-            System.out.println(NOT_INSURABLE_AGE_MESSAGE);
+        if (age < Constants.minimumAge) {
+            System.out.println(Constants.NOT_INSURABLE_AGE_MESSAGE);
         } else if (age < 25) {
-            String message = ADDITIONAL_SURCHARGE + surcharge;
+            String message = Constants.ADDITIONAL_SURCHARGE + surcharge;
             processInsurance(message, basicInsurance + surcharge);
-        } else processInsurance(NO_ADDITIONAL_SURCHARGE, basicInsurance);
+        } else processInsurance(Constants.NO_ADDITIONAL_SURCHARGE, basicInsurance);
     }
 
     /**
@@ -39,17 +23,17 @@ public class InsuranceProgram {
      *
      * @return
      */
-    private static int getUserInput() {
+     static int getUserInput() {
         Scanner sc = new Scanner(System.in);
         int number;
         do {
             while (!sc.hasNextInt()) {
-                System.out.println(PLEASE_ENTER_A_VALID_NUMBER);
+                System.out.println(Constants.PLEASE_ENTER_A_VALID_NUMBER);
                 sc.next();
             }
             number = sc.nextInt();
         }
-        while (number <= 0);
+        while (number < 0);
         return number;
     }
 
@@ -73,7 +57,7 @@ public class InsuranceProgram {
      */
     private static void printMessages(String message) {
         System.out.println(message);
-        System.out.print(HOW_MANY_ACCIDENTS_DID_YOU_HAVE);
+        System.out.print(Constants.HOW_MANY_ACCIDENTS_DID_YOU_HAVE);
     }
 
 
@@ -87,31 +71,31 @@ public class InsuranceProgram {
         int cost;
         switch (accidents) {
             case 0:
-                System.out.println(NO_SURCHARGE);
-                System.out.println(TOTAL_AMOUNT_TO_PAY + basicInsurance);
+                System.out.println(Constants.NO_SURCHARGE);
+                System.out.println(Constants.TOTAL_AMOUNT_TO_PAY + basicInsurance);
                 return basicInsurance;
             case 1:
                 cost = basicInsurance + 50;
-                System.out.println(ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 50 + TOTAL_AMOUNT_TO_PAY + cost);
+                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 50 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
                 return cost;
             case 2:
                 cost = basicInsurance + 125;
-                System.out.println(ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 125 + TOTAL_AMOUNT_TO_PAY + cost);
+                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 125 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
                 return cost;
             case 3:
                 cost = basicInsurance + 225;
-                System.out.println(ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 225 + TOTAL_AMOUNT_TO_PAY + cost);
+                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 225 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
                 return cost;
             case 4:
                 cost = basicInsurance + 375;
-                System.out.println(ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 375 + TOTAL_AMOUNT_TO_PAY + cost);
+                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 375 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
                 return cost;
             case 5:
                 cost = basicInsurance + 575;
-                System.out.println(ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 575 + TOTAL_AMOUNT_TO_PAY + cost);
+                System.out.println(Constants.ADDITIONAL_SURCHARGE_FOR_ACCIDENT + 575 + Constants.TOTAL_AMOUNT_TO_PAY + cost);
                 return cost;
             default:
-                System.out.println(UNINSURABLE);
+                System.out.println(Constants.UNINSURABLE);
                 return -1;
         }
     }
