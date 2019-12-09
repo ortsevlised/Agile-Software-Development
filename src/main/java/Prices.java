@@ -1,6 +1,7 @@
 public class Prices {
     private int basicInsurance;
     private int basicSurcharge;
+    private int currentPrice;
 
     public int getCurrentPrice() {
         return currentPrice;
@@ -10,12 +11,12 @@ public class Prices {
         this.currentPrice = totalInsuranceCharge;
     }
 
-    private int currentPrice;
-
-
     public Prices(int basicInsurance, int basicSurcharge) {
         this.basicInsurance = basicInsurance;
         this.basicSurcharge = basicSurcharge;
+    }
+    public Prices(int currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public int getUnder25Surcharge() {

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,25 +15,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class InsuranceProgramTest {
+    static Prices price;
+
+    @BeforeAll
+    public static void setup() {
+        price = new Prices(500);
+    }
 
     @DisplayName("Testing the total amount to pay - Happy path")
     @ParameterizedTest
     @CsvSource({
-            "500,0,500",
-            "100,1,150",
-            "200,2,325",
-            "300,3,525",
-            "400,4,775",
-            "500,5,1075",
-            "500,6,-1",
-            "500,7,-1",
-            "4400,27,-1",
-            "500,-1,-1",
-
+            "0,0",
+            "1,50",
+            "2,125",
+            "3,225",
+            "4,375",
+            "5,575",
     })
-    void getAmountToPayTest(int basicAmount, int numberOfAccidents, int expectedAmount) {
-        int totalAmount = InsuranceProgram.getAmountToPay(basicAmount, numberOfAccidents);
-        assertThat("The total amount should be", totalAmount, is(expectedAmount));
+    void getAmountToPayTest(int numberOfAccidents, int surcharge) {
+        ToPay insuranceToPay = InsuranceProgram.getMessageToDisplay(numberOfAccidents,price.getCurrentPrice());
+        assertThat("The total amount should be", insuranceToPay.getAmount(), is(price.getCurrentPrice() + surcharge));
     }
 
     @DisplayName("Testing input of a valid number")

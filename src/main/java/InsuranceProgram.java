@@ -13,7 +13,7 @@ public class InsuranceProgram {
             System.out.println(Constants.NOT_INSURABLE_AGE_MESSAGE);
         } else if (age < 25) {
             price.setCurrentPrice(price.getUnder25Surcharge());
-            processInsurance(Constants.ADDITIONAL_SURCHARGE + price.getBasicSurcharge());
+            processInsurance(String.format("%s%d", Constants.ADDITIONAL_SURCHARGE, price.getBasicSurcharge()));
         } else {
             price.setCurrentPrice(price.getBasicInsurance());
             processInsurance(Constants.NO_ADDITIONAL_SURCHARGE);
@@ -39,7 +39,6 @@ public class InsuranceProgram {
         return number;
     }
 
-
     /**
      * Process the data and returns the insurance's value
      *
@@ -47,8 +46,10 @@ public class InsuranceProgram {
      */
     private static void processInsurance(String message) {
         printMessages(message);
-        int accidents = getUserInput();
-        System.out.println(getMessageToDisplay(accidents).getMessage());
+        int numberOfAccidents = getUserInput();
+        ToPay insuranceToPay = getMessageToDisplay(numberOfAccidents, price.getCurrentPrice());
+        price.setCurrentPrice(insuranceToPay.getAmount());
+        System.out.println(insuranceToPay.getMessage());
     }
 
     /**
@@ -61,11 +62,10 @@ public class InsuranceProgram {
         System.out.print(Constants.HOW_MANY_ACCIDENTS_DID_YOU_HAVE);
     }
 
-
-    public static ToPay getMessageToDisplay(int numberOfAccidents) {
-        HashMap<Integer, ToPay> amount = AccidentSurcharge.getAmount(price);
+    public static ToPay getMessageToDisplay(int numberOfAccidents, int currentPrice) {
+        HashMap<Integer, ToPay> amount = AccidentSurcharge.getAmount(currentPrice);
         ToPay value = amount.get(numberOfAccidents);
-        return value != null ? value : new ToPay(Constants.UNINSURABLE, -1);
+        return value != null ? value : new ToPay(Constants.UNINSURABLE, ExtraPerAccident.MORE_ACCIDENTS.getExtraToPay());
     }
 }
 
