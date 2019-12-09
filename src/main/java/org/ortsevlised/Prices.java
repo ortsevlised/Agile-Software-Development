@@ -1,7 +1,9 @@
+package org.ortsevlised;
+
 public class Prices {
-    private int basicInsurance;
-    private int basicSurcharge;
-    private int currentPrice;
+    private static int basicInsurance;
+    private static int basicSurcharge;
+    private static int currentPrice;
 
     public int getCurrentPrice() {
         return currentPrice;
@@ -15,6 +17,7 @@ public class Prices {
         this.basicInsurance = basicInsurance;
         this.basicSurcharge = basicSurcharge;
     }
+
     public Prices(int currentPrice) {
         this.currentPrice = currentPrice;
     }

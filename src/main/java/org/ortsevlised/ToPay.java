@@ -1,3 +1,5 @@
+package org.ortsevlised;
+
 public class ToPay {
     private String message;
     private int amount;

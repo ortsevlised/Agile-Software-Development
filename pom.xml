@@ -12,10 +12,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-        <junit.jupiter.version>5.6.0-M1</junit.jupiter.version>
+           <junit.jupiter.version>5.6.0-M1</junit.jupiter.version>
         <jline.version>2.14.5</jline.version>
         <common-lang3.version>3.9</common-lang3.version>
-        <hamcrest-core.version>2.22.2</hamcrest-core.version>
+        <maven-surefire-plugin>2.22.2</maven-surefire-plugin>
 
     </properties>
 
@@ -70,7 +70,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${hamcrest-core.version}</version>
+                <version>${maven-surefire-plugin}</version>
             </plugin>
         </plugins>
     </build>

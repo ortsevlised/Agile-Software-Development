@@ -1,5 +1,7 @@
-public enum ExtraPerAccident {
+package org.ortsevlised;
 
+public enum ExtraPerAccident {
+    NO_ACCIDENT(0),
     ONE_ACCIDENT(50),
     TWO_ACCIDENTS(125),
     THREE_ACCIDENTS(225),
