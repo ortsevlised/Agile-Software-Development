@@ -11,7 +11,7 @@ public class InsuranceProgram {
 
     private static Prices price = new Prices(500, 100);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TooManyRetriesException {
         System.out.print(ENTER_YOUR_AGE);
         int age = getUserInput();
 
@@ -31,13 +31,18 @@ public class InsuranceProgram {
      *
      * @return
      */
-    static int getUserInput() {
+    static int getUserInput() throws TooManyRetriesException {
+        int retries = 0;
         Scanner sc = new Scanner(System.in);
         int number;
         do {
-            while (!sc.hasNextInt()) {
+            while (!sc.hasNextInt() && retries < 50) {
                 System.out.println(PLEASE_ENTER_A_VALID_NUMBER);
                 sc.next();
+                retries++;
+            }
+            if(retries>=50){
+                throw new TooManyRetriesException("The number of retries is too high");
             }
             number = sc.nextInt();
         }
@@ -50,10 +55,10 @@ public class InsuranceProgram {
      *
      * @param message
      */
-    private static void processInsurance(String message) {
+    private static void processInsurance(String message) throws TooManyRetriesException {
         printMessages(message);
         int numberOfAccidents = getUserInput();
-        ToPay insuranceToPay = getMessageToDisplay(numberOfAccidents, price.getCurrentPrice());
+        ToPay insuranceToPay = getInsuranceToPay(numberOfAccidents, price.getCurrentPrice());
         price.setCurrentPrice(insuranceToPay.getAmount());
         System.out.println(insuranceToPay.getMessage());
     }
@@ -68,7 +73,7 @@ public class InsuranceProgram {
         System.out.print(HOW_MANY_ACCIDENTS_DID_YOU_HAVE);
     }
 
-    public static ToPay getMessageToDisplay(int numberOfAccidents, int currentPrice) {
+    public static ToPay getInsuranceToPay(int numberOfAccidents, int currentPrice) {
         HashMap<Integer, ToPay> amount = getAccidentSurcharge(currentPrice);
         ToPay value = amount.get(numberOfAccidents);
         return value != null ? value : new ToPay(UNINSURABLE, MORE_ACCIDENTS.getExtraToPay());

@@ -11,18 +11,18 @@ public class AccidentSurcharge {
                 new HashMap<>();
         {
             ACCIDENTS.put(0, new ToPay(String.format("%s\n%s", NO_SURCHARGE, TOTAL_AMOUNT_TO_PAY + currentPrice), currentPrice));
-            ACCIDENTS.put(1, getValue(currentPrice, ONE_ACCIDENT.getExtraToPay()));
-            ACCIDENTS.put(2, getValue(currentPrice, TWO_ACCIDENTS.getExtraToPay()));
-            ACCIDENTS.put(3, getValue(currentPrice, THREE_ACCIDENTS.getExtraToPay()));
-            ACCIDENTS.put(4, getValue(currentPrice, FOUR_ACCIDENTS.getExtraToPay()));
-            ACCIDENTS.put(5, getValue(currentPrice, FIVE_ACCIDENTS.getExtraToPay()));
+            ACCIDENTS.put(1, getValueToPay(currentPrice, ONE_ACCIDENT.getExtraToPay()));
+            ACCIDENTS.put(2, getValueToPay(currentPrice, TWO_ACCIDENTS.getExtraToPay()));
+            ACCIDENTS.put(3, getValueToPay(currentPrice, THREE_ACCIDENTS.getExtraToPay()));
+            ACCIDENTS.put(4, getValueToPay(currentPrice, FOUR_ACCIDENTS.getExtraToPay()));
+            ACCIDENTS.put(5, getValueToPay(currentPrice, FIVE_ACCIDENTS.getExtraToPay()));
         }
         return ACCIDENTS;
     }
 
-    private static ToPay getValue(int currentPrice, int extraPerAccident) {
+    private static ToPay getValueToPay(int currentPrice, int extraPerAccident) {
         int amount = currentPrice + extraPerAccident;
-        return new ToPay(ADDITIONAL_SURCHARGE_FOR_ACCIDENT + extraPerAccident +
-                TOTAL_AMOUNT_TO_PAY + amount, amount);
+        String message = ADDITIONAL_SURCHARGE_FOR_ACCIDENT + extraPerAccident + TOTAL_AMOUNT_TO_PAY + amount;
+        return new ToPay(message, amount);
     }
 }

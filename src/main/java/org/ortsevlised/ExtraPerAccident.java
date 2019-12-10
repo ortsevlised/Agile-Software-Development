@@ -9,14 +9,12 @@ public enum ExtraPerAccident {
     FIVE_ACCIDENTS(575),
     MORE_ACCIDENTS(-1);
 
+    int extraToPay;
     public int getExtraToPay() {
         return extraToPay;
     }
-
     ExtraPerAccident(int extraToPay) {
         this.extraToPay = extraToPay;
     }
-
-    int extraToPay;
 
 }
