@@ -11,7 +11,7 @@ public class InsuranceProgram {
 
     private static Prices price = new Prices(500, 100);
 
-    public static void main(String[] args) throws TooManyRetriesException {
+    public static void main(String[] args) throws Exception {
         System.out.print(ENTER_YOUR_AGE);
         int age = getUserInput();
 
@@ -25,6 +25,7 @@ public class InsuranceProgram {
             processInsurance(NO_ADDITIONAL_SURCHARGE);
         }
     }
+
 
     /**
      * Gets user input making sure is a valid number

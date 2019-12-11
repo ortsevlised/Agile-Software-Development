@@ -6,7 +6,7 @@ import static org.ortsevlised.Constants.*;
 import static org.ortsevlised.ExtraPerAccident.*;
 
 public class AccidentSurcharge {
-    static HashMap<Integer, ToPay> getAccidentSurcharge(int currentPrice) {
+    public static HashMap<Integer, ToPay> getAccidentSurcharge(int currentPrice) {
         HashMap<Integer, ToPay> ACCIDENTS =
                 new HashMap<>();
         {
