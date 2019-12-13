@@ -9,30 +9,35 @@ import static org.ortsevlised.ExtraPerAccident.MORE_ACCIDENTS;
 
 public class InsuranceProgram {
 
-    private static Prices price = new Prices(500, 100);
+    private static InsurancePrice insurance;
 
     public static void main(String[] args) throws Exception {
+        insurance = new InsurancePrice(500, 100);
+        getInsuranceToPay();
+    }
+
+    /**
+     * Gets the user input making sure is a valid number
+     */
+    private static void getInsuranceToPay() throws TooManyRetriesException {
         System.out.print(ENTER_YOUR_AGE);
         int age = getUserInput();
 
-        if (age < minimumAge) {
+        if (age < MINIMUM_AGE) {
             System.out.println(NOT_INSURABLE_AGE_MESSAGE);
         } else if (age < 25) {
-            price.setCurrentPrice(price.getUnder25Surcharge());
-            processInsurance(String.format("%s%d", ADDITIONAL_SURCHARGE, price.getBasicSurcharge()));
+            insurance.setCurrentPrice(insurance.getUnder25Surcharge());
+            processInsurance(String.format("%s%d", ADDITIONAL_SURCHARGE, insurance.getBasicSurcharge()));
         } else {
-            price.setCurrentPrice(price.getBasicInsurance());
+            insurance.setCurrentPrice(insurance.getBasicInsurance());
             processInsurance(NO_ADDITIONAL_SURCHARGE);
         }
     }
 
-
     /**
-     * Gets user input making sure is a valid number
-     *
-     * @return
+     * Gets the user input making sure is a valid number
      */
-    static int getUserInput() throws TooManyRetriesException {
+    public static int getUserInput() throws TooManyRetriesException {
         int retries = 0;
         Scanner sc = new Scanner(System.in);
         int number;
@@ -52,16 +57,14 @@ public class InsuranceProgram {
     }
 
     /**
-     * Process the data and returns the insurance's value
-     *
-     * @param message
+     * Process the data and returns the total insurance's value
      */
     private static void processInsurance(String message) throws TooManyRetriesException {
         printMessages(message);
         int numberOfAccidents = getUserInput();
-        ToPay insuranceToPay = getInsuranceToPay(numberOfAccidents, price.getCurrentPrice());
-        price.setCurrentPrice(insuranceToPay.getAmount());
-        System.out.println(insuranceToPay.getMessage());
+        ToPay totalToPay = addSurchargePerAccident(numberOfAccidents, insurance.getCurrentPrice());
+        insurance.setCurrentPrice(totalToPay.getAmount());
+        System.out.println(totalToPay.getMessage());
     }
 
     /**
@@ -74,7 +77,11 @@ public class InsuranceProgram {
         System.out.print(HOW_MANY_ACCIDENTS_DID_YOU_HAVE);
     }
 
-    public static ToPay getInsuranceToPay(int numberOfAccidents, int currentPrice) {
+    /**
+     * Adds the surcharge according to the amount of accidents
+     * returns a map with the message to display to the user and the amount to pay
+     */
+    public static ToPay addSurchargePerAccident(int numberOfAccidents, int currentPrice) {
         HashMap<Integer, ToPay> amount = getAccidentSurcharge(currentPrice);
         ToPay value = amount.get(numberOfAccidents);
         return value != null ? value : new ToPay(UNINSURABLE, MORE_ACCIDENTS.getExtraToPay());

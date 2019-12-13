@@ -1,10 +1,6 @@
 package org.ortsevlised;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class Prices {
+public class InsurancePrice {
     private static int basicInsurance;
     private static int basicSurcharge;
     private static int currentPrice;
@@ -17,17 +13,15 @@ public class Prices {
         this.currentPrice = totalInsuranceCharge;
     }
 
-    public Prices(int basicInsurance, int basicSurcharge) {
+    public InsurancePrice(int basicInsurance, int basicSurcharge) {
         this.basicInsurance = basicInsurance;
         this.basicSurcharge = basicSurcharge;
     }
 
-    public Prices(int currentPrice) {
+    public InsurancePrice(int currentPrice) {
         this.currentPrice = currentPrice;
     }
 
-    public Prices() {
-    }
     public int getUnder25Surcharge() {
         return basicInsurance + basicSurcharge;
     }
@@ -37,17 +31,8 @@ public class Prices {
         return basicInsurance;
     }
 
-    public void setBasicInsurance(int basicInsurance) {
-        this.basicInsurance = basicInsurance;
-    }
-
     public int getBasicSurcharge() {
         return basicSurcharge;
     }
-
-    public void setBasicSurcharge(int basicSurcharge) {
-        this.basicSurcharge = basicSurcharge;
-    }
-
 
 }
