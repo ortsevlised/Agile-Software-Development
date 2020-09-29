@@ -1,4 +1,6 @@
-# Agile-Software-Development
+# Agile-Software-Development Junit 5 features.
+
+This is a simple Program to calculate the price of a car insurance
 ## These tests are probably not exactly what one would do in real life but it is just an attempt to demonstrate a few of the Junit 5 features.
 
 This is a simple Program to calculate the price of a car insurance
